@@ -211,22 +211,22 @@ static const uint16_t tconv_max[] = {
 	324	/* AD7606_OSR_256 */
 };
 
-
-/***************************************************************************//**
- * @brief Read a device register via SPI.
+/**
+ * @brief Reads a register from the AD7606 ADC device.
  *
- * This function performs CRC8 computation and checking if enabled in the device.
+ * This function reads the value of a register specified by `reg_addr` from the AD7606 ADC device
+ * associated with the provided `dev` structure. The read value is stored in the `reg_data` variable.
  *
- * @param dev        - The device structure.
- * @param reg_addr   - Register address in device memory.
- * @param reg_data   - Pointer to the location where to store the register value.
+ * @param dev The AD7606 device structure.
+ * @param reg_addr The address of the register to read.
+ * @param reg_data Pointer to store the read register value.
  *
- * @return ret - return code.
- *         Example: -EIO - SPI communication error.
- *                  -ENOTSUP - Device not in software mode.
- *                  -EBADMSG - CRC computation mismatch.
- *                  0 - No errors encountered.
-*******************************************************************************/
+ * @return 0 on success, or a negative error code on failure.
+ *         Possible error codes:
+ *         -ENOTSUP: The software mode is not supported.
+ *         -EBADMSG: The read value does not match the expected CRC value.
+ *         Any other negative value indicates a communication error with the ADC device.
+ */
 int32_t ad7606_spi_reg_read(struct ad7606_dev *dev,
 			    uint8_t reg_addr,
 			    uint8_t *reg_data)
